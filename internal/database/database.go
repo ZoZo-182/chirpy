@@ -15,26 +15,25 @@ type DB struct {
 }
 
 type DBStructure struct {
-	Chirps map[int]Chirp `json:"chirps"`
-	Users map[int]User `json:"users"`
-	RefreshTokens map[string]RefreshToken `json:"refresh_toekns"`
+	Chirps        map[int]Chirp `json:"chirps"`
+	Users         map[int]User `json:"users"`
+	RefreshTokens map[string]RefreshToken `json:"refresh_tokens"`
 }
-
 
 func NewDB(path string) (*DB, error) {
 	db := &DB{
 		path: path,
-		mu: &sync.RWMutex{},
+		mu:   &sync.RWMutex{},
 	}
 	err := db.ensureDB()
 	return db, err
 }
 
-
 func (db *DB) createDB() error {
 	dbStructure := DBStructure{
-		Chirps: map[int]Chirp{},
-		Users: map[int]User{},
+		Chirps:        map[int]Chirp{},
+		Users:         map[int]User{},
+        RefreshTokens: map[string]RefreshToken{},
 	}
 	return db.writeDB(dbStructure)
 }
